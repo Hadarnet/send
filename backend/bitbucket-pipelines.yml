@@ -1,0 +1,46 @@
+image: docker:latest
+
+pipelines:
+  default:
+    - step:
+        name: Build Docker Images
+        services:
+          - docker
+        caches:
+          - docker
+        script:
+          # Install required packages
+          - apk add --no-cache python3 py3-pip cython libyaml-dev build-base
+          # Upgrade pip
+          - pip install --upgrade pip
+          # Install Cython
+          - pip install Cython
+          # Create a virtual environment
+          - python3 -m venv venv
+          # Activate the virtual environment
+          - . venv/bin/activate
+          # Upgrade pip and setuptools
+          - pip install --upgrade pip setuptools
+          # Install a specific version of PyYAML
+          - pip install PyYAML==5.4.1
+          # Install docker-compose in the virtual environment
+          - pip install docker-compose
+          # Build Docker images and save them as tar files
+          - docker-compose build
+          - docker save -o backend-image.tar backend
+          - docker save -o nginx-image.tar nginx
+    - step:
+        name: Deploy and Run on EC2
+        deployment: production
+        script:
+          # Transfer tar files to the EC2 server
+          - scp -i SSH_KEY backend-image.tar SSH_USER@EC2_SERVER:/home/ubuntu/docker_uploads/
+          - scp -i SSH_KEY nginx-image.tar SSH_USER@EC2_SERVER:/home/ubuntu/docker_uploads/
+          # Run SSH commands on the server
+          - ssh -i SSH_KEY SSH_USER@EC2_SERVER "
+              docker load -i /home/ubuntu/docker_uploads/backend-image.tar &&
+              docker load -i /home/ubuntu/docker_uploads/nginx-image.tar &&
+              cd /home/ubuntu/backend &&
+              docker-compose down &&
+              docker-compose up -d --build
+            "

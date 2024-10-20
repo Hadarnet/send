@@ -1,0 +1,308 @@
+[33mcommit e4bd9cab8c73611cc245b93b3859926b9bfb2b82[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Ubuntu <ubuntu@ip-172-31-17-50.ec2.internal>
+Date:   Sun Oct 13 10:48:33 2024 +0000
+
+    Revert "Reapply "Your commit message""
+    
+    This reverts commit 91a33938c84c35cb6a2bc365e9dad769addbd494.
+
+[33mcommit 91a33938c84c35cb6a2bc365e9dad769addbd494[m
+Author: Ubuntu <ubuntu@ip-172-31-17-50.ec2.internal>
+Date:   Sun Oct 13 10:45:53 2024 +0000
+
+    Reapply "Your commit message"
+    
+    This reverts commit c1f0b528ecc66a78df4d6f246e7d8887f756304d.
+
+[33mcommit c1f0b528ecc66a78df4d6f246e7d8887f756304d[m
+Author: Ubuntu <ubuntu@ip-172-31-17-50.ec2.internal>
+Date:   Sun Oct 13 10:44:51 2024 +0000
+
+    Revert "Your commit message"
+    
+    This reverts commit 3de335cc318210d541bcf4a32b594c95aff062d0.
+
+[33mcommit 3de335cc318210d541bcf4a32b594c95aff062d0[m
+Author: Ubuntu <ubuntu@ip-172-31-17-50.ec2.internal>
+Date:   Wed Sep 25 13:53:30 2024 +0000
+
+    Your commit message
+
+[33mcommit 97f67b46977ebf5ecf4dde9629911df47366d5aa[m
+Author: Ubuntu <ubuntu@ip-172-31-17-50.ec2.internal>
+Date:   Wed Sep 25 13:02:16 2024 +0000
+
+    aws
+
+[33mcommit 843334181e3e0406609dbf4440bc3d6a6bb2753d[m
+Merge: 182ac66 505b7fb
+Author: Be <connect@becompany.net>
+Date:   Sun Oct 13 12:27:16 2024 +0300
+
+    Merge branch 'main' of https://bitbucket.org/becompnaynet/backend
+
+[33mcommit 182ac66e958d62fcaf0674fd6a47683601f22c15[m
+Author: Be <connect@becompany.net>
+Date:   Sun Oct 13 12:27:12 2024 +0300
+
+    FileConvertView
+
+[33mcommit 505b7fb2337cf9972adedab172b9b790fc246f40[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Sun Oct 13 12:25:49 2024 +0300
+
+    DEBUG = False
+
+[33mcommit 8b51c8544d46ee60c0d5fc33cd99fa49972206b7[m
+Author: Be <connect@becompany.net>
+Date:   Wed Oct 9 04:51:07 2024 +0300
+
+    moviepy
+
+[33mcommit 0649e85d38ef7526eb3078bd29ca03093942c5d0[m
+Author: Be <connect@becompany.net>
+Date:   Wed Oct 9 04:48:50 2024 +0300
+
+    convert file and folder
+
+[33mcommit cf93afcdd2d28128473c68b2277dde20c49e1d6e[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 22:16:07 2024 +0300
+
+    migrations
+
+[33mcommit 6ce5fb8574d08327b073422039fcff30f2e96b78[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 22:04:19 2024 +0300
+
+    DATABASES
+
+[33mcommit 3428752b9f1da1a093902158bb4baa30cf330a75[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 21:57:14 2024 +0300
+
+    no migrations
+
+[33mcommit 470443fe119b8b52351cd3696379ad641374dddf[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 18:11:53 2024 +0300
+
+    Rating Employee
+
+[33mcommit 7412558bbdc3cbe3f91b3ccf522fb213a44e86f5[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 18:11:05 2024 +0300
+
+    rating
+
+[33mcommit f234cb9ec6335cb5bdbc442b80b3c17b4c7c8d82[m
+Author: Be <connect@becompany.net>
+Date:   Mon Oct 7 18:02:15 2024 +0300
+
+    logout
+
+[33mcommit 1bc6d8d588c7663f50accca7bb47b8e9a2c1161e[m
+Author: Be <connect@becompany.net>
+Date:   Sun Oct 6 04:59:17 2024 +0300
+
+    CORS_ALLOWED_ORIGINS
+
+[33mcommit de76ef9a5abf39fde28298c00bebe7ae2aee0f30[m
+Author: Be <connect@becompany.net>
+Date:   Sat Oct 5 20:18:49 2024 +0300
+
+    django-storages
+
+[33mcommit 54732c7f50faf15e3f7ddefefafd8be029a57da2[m
+Author: Be <connect@becompany.net>
+Date:   Sat Oct 5 20:18:42 2024 +0300
+
+    django-storages
+
+[33mcommit 847cf34b6839560e06ea06290b53fcff8d6e95d2[m
+Author: Be <connect@becompany.net>
+Date:   Thu Oct 3 22:26:09 2024 +0300
+
+    CORS_ALLOWED_ORIGINS
+
+[33mcommit de6e4abff389ed4dadcf8ae1383e5cca8b8034dc[m
+Author: Be <connect@becompany.net>
+Date:   Thu Oct 3 21:59:36 2024 +0300
+
+    #
+
+[33mcommit 65189003293a3a3dd19da98507131595f634f5a0[m
+Author: Be <connect@becompany.net>
+Date:   Thu Oct 3 21:56:06 2024 +0300
+
+    CORS_ALLOWED_ORIGINS
+
+[33mcommit 097d4af45c14b5e44fbbe8701a0d9f8465025e72[m
+Author: Be <connect@becompany.net>
+Date:   Thu Oct 3 21:53:19 2024 +0300
+
+    asset post
+
+[33mcommit c819aeb33d4df92292487868e79138a0783928af[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Wed Oct 2 17:34:40 2024 +0300
+
+    Line 270 Error
+
+[33mcommit a72c93767fed0191a5636fd1d16e1fa2acdda53f[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Wed Oct 2 16:05:30 2024 +0300
+
+    SubDomain
+
+[33mcommit 5399eb32e97b64334adf61ec101b128b6cba4d48[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Wed Oct 2 14:39:25 2024 +0300
+
+    case-insensitive
+
+[33mcommit db1c744554429cf425b28554c30dc1323634c7ec[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Mon Sep 30 18:28:47 2024 +0300
+
+    bookkeeping API'S
+
+[33mcommit 087d149c14885190f6b7236440d5b8906c0026f4[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Mon Sep 30 16:23:46 2024 +0300
+
+    Convert
+
+[33mcommit 745015607e1e9682c3557e76aab151a30290dbf6[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Mon Sep 30 15:36:55 2024 +0300
+
+    Deleted Convert Func
+
+[33mcommit 1695b972e485b04fc43a73d763e3697c1b0e95b9[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Mon Sep 30 15:26:38 2024 +0300
+
+    No Migrations files
+
+[33mcommit a7b7409fdbddb159ac50b9754fced63c19c808c0[m
+Author: Be <connect@becompany.net>
+Date:   Mon Sep 30 02:31:27 2024 +0300
+
+    convert customer
+
+[33mcommit 1d13d9379aa5798456d8d7b537f7b323b3046fc1[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Sun Sep 29 19:41:16 2024 +0300
+
+    another one
+
+[33mcommit 044cc5bb2878290aa1943d254055f6d9bd429bad[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Sun Sep 29 19:35:26 2024 +0300
+
+    no migrations
+
+[33mcommit fc818524cb978750a5db563411e3fe3970fe8324[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 20:39:26 2024 +0300
+
+    facebook
+
+[33mcommit f3673230ac9381e0bd4ec51fff365aeb78a90edb[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 19:25:17 2024 +0300
+
+    #20
+
+[33mcommit c0fd3ae008ac3cf4dc3ea32be65e4f7ffcff60e4[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 19:22:38 2024 +0300
+
+    #19
+
+[33mcommit 03908e5773d53d0723d100e592c619e2560a94e2[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 19:19:47 2024 +0300
+
+    #18
+
+[33mcommit b23347e2c44008c655c558c82d25a152cc45ea59[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 19:15:09 2024 +0300
+
+    #17
+
+[33mcommit 2c9f183bba90c9f98ae5828a444f9561e6e99725[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:50:21 2024 +0300
+
+    #16
+
+[33mcommit 84fc8409b53e2b6c1dccd058da1c16f66a161d89[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:47:52 2024 +0300
+
+    #15
+
+[33mcommit 6575d41146f7a7212d6d1138f1f6f82ad49e0db7[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:45:52 2024 +0300
+
+    #14
+
+[33mcommit 1103c610d2846bccc72eeb8606a1bb5e4c1bc84a[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:42:47 2024 +0300
+
+    #13
+
+[33mcommit 17b0d074f96ee5defacf26bfea2cb214c990f10b[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:40:27 2024 +0300
+
+    #12
+
+[33mcommit 902fcb75792ba79d5e36952410e3be1f9112feef[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:36:38 2024 +0300
+
+    #11
+
+[33mcommit 362c5397dfc597fb9fe7ece39e81d0d5ebdbcf52[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:35:17 2024 +0300
+
+    #10
+
+[33mcommit fa103c116432f6f1a1a519e76213f92b5b3cce92[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:30:43 2024 +0300
+
+    atlassian/scp-deploy:1.5.0
+
+[33mcommit 5cedd6f0c80bacc38203e3e81a36fb25123d76e9[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:26:07 2024 +0300
+
+    Bitbucket Pipelines #6
+
+[33mcommit b306d47aaa04fa67c32dfe2a686809dc4001c24c[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 18:21:31 2024 +0300
+
+    Bitbucket Pipelines #6
+
+[33mcommit 914d3d8863230311dd7b050fc0267f6db4eb3fa8[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 12:46:29 2024 +0300
+
+    Bitbucket Pipelines #5
+
+[33mcommit 8d0c648b01ce6affe2672ae3f775c6f7f235218b[m
+Author: Evyatar <evyatar54545@gmail.com>
+Date:   Thu Sep 26 12:37:53 2024 +0300
+
+    Bitbucket Pipelines #4
+
+[33mcommit fd368e25590d50d9ed91a0846c9395ee3047f40e[

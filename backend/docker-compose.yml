@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Dockerfile for your Django app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+  nginx:
+    build:
+      context: ./nginx  # Path to your Nginx Dockerfile
+    ports:
+      - "80:80"   # HTTP
+      - "443:443" # HTTPS
+    volumes:
+      - ./static/:/home/app/static/
+      - ./media/:/home/app/media/
+      - /etc/letsencrypt:/etc/letsencrypt  # Mount Let's Encrypt certificates
+    depends_on:
+      - backend
