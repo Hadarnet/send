@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'channels',
-
+    'storages',
 
     # Local apps
 
@@ -92,7 +92,7 @@ INSTALLED_APPS = [
     'telecom',
     'sync',
     'settings',
-    'chat',
+    # 'chat',
 ]
 
 

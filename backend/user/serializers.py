@@ -58,10 +58,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     Serializer for user registration, handles password creation.
     """
     password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
+    pic = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email', 'password', 'first_name', 'last_name', 'pic')
     
     def create(self, validated_data):
         """
@@ -70,7 +73,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         """
         user = User.objects.create_user(
             email=validated_data['email'],
-            password=validated_data['password']
+            password=validated_data['password'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data.get('last_name', ''),
+            pic=validated_data.get('pic', None)
         )
         return user
 

@@ -17,7 +17,7 @@ class UserManager(BaseUserManager):
         """
         if email is None:
             raise TypeError("Users must have an email.")
-        user = self.model(email=self.normalize_email(email))
+        user = self.model(email=self.normalize_email(email), **kwargs)
         user.is_active = True
         user.set_password(password)
         user.save(using=self._db)

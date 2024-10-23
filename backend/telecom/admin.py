@@ -243,3 +243,11 @@ class VideoCallAdmin(admin.ModelAdmin):
         'business',            # Filter by associated business
         'user'                 # Filter by associated user
     )
+
+
+
+class ChatMessageAdmin(admin.ModelAdmin):
+    list_editable = ['is_read', 'message']
+    list_display = ['sender', 'reciever', 'is_read', 'message']
+
+admin.site.register(models.ChatMessage, ChatMessageAdmin)

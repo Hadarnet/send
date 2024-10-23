@@ -3,10 +3,7 @@ from . import views
 
 urlpatterns = [
 
-    # Endpoint for Inbox
-    path("my-messages/", views.MyInbox.as_view()),
-    path("get-messages/<reciever_id>/", views.GetMessages.as_view()),
-    path("send-messages/", views.SendMessages.as_view()),
-       
-
+    # path("my-messages/", views.MyInbox.as_view()),
+    # path("get-messages/<reciever_id>/", views.GetMessages.as_view()),
+    # path("send-messages/", views.SendMessages.as_view()),
 ]
