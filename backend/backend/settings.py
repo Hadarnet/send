@@ -95,7 +95,7 @@ INSTALLED_APPS = [
     # 'chat',
 ]
 
-
+commit = 'commit'
 # Auth
 AUTH_USER_MODEL = 'user.User'
 
