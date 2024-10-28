@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'sync',
     'settings',
     # 'chat',
+    'wallet',
 ]
 
 # Auth
