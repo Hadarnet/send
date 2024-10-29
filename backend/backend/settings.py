@@ -239,3 +239,7 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL =  None
 AWS_S3_VERIFY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+#Stripe
+STRIPE_SECRET_KEY = "sk_test_51QEIBJCl05DVrigZAcxJXTyhEtMqLvGWnJdVyDturvyiqunpVaH3XZYycFkSHdM8kEZf7MELrZDKrzeNIYtlJNos00a04ufV6A"
