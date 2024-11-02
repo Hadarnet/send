@@ -5,45 +5,64 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import F
 from .models import Wallet, Transaction
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views import View
+from django.shortcuts import redirect
+from rest_framework.permissions import IsAuthenticated
+from django.views.generic import TemplateView
 import stripe
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
+# print(stripe.api_key)
 # Create your views here.
 
+
+class SuccessView(TemplateView):
+    template_name = "success.html"
+
+
+class CancelView(TemplateView):
+    template_name = "cancel.html"
+
+
 class DepositView(APIView):
-    def post(self, request):
-        amount = request.data.get("amount")
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        YOUR_DOMAIN = "http://127.0.0.1:8000/"
+        
         try:
-            # Create a Stripe Checkout Session
-            session = stripe.checkout.Session.create(
-                payment_method_types=["card"],
-                mode="payment",
-                line_items=[
-                    {
-                        "price_data": {
-                            "currency": "usd",
-                            "product_data": {
-                                "name": "Wallet Deposit",
-                            },
-                            "unit_amount": int(amount) * 100,  # Stripe works with cents
-                        },
-                        "quantity": 1,
-                    }
-                ],
-                metadata={"user_id": request.user.id},
-                success_url="https://yourdomain.com/success?session_id={CHECKOUT_SESSION_ID}",
-                cancel_url="https://yourdomain.com/cancel",
+            # Stripe API call to create a product and price
+            product = stripe.Product.create(name='Wallet Deposit')
+            amount_in_cents = int(request.data["amount"] * 100) 
+
+            price = stripe.Price.create(
+                product=product.id,
+                unit_amount=amount_in_cents,
+                currency='usd',
             )
 
-            # Return the session ID to the frontend
-            return Response({"session_id": session.id}, status=status.HTTP_200_OK)
+            # Stripe Checkout session
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        'price': price.id,
+                        'quantity': 1,
+                    },
+                ],
+                mode='payment',
+                success_url=YOUR_DOMAIN + 'wallet/deposit/success/',
+                cancel_url=YOUR_DOMAIN + 'wallet/deposit/cancel/',
+            )
+            # print("addasd")
+            return Response({"url": checkout_session.url}, status=200)
+            # return redirect(checkout_session.url, code=303)
 
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+           
+            print(f"Error creating Stripe session: {str(e)}")
+            return Response({"error": str(e)}, status=400)
         
 class StripeWebhookView(View):
     def post(self, request):

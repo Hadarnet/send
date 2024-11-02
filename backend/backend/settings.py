@@ -170,17 +170,23 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bedb',
+#         'USER': 'mysuperuser',
+#         'PASSWORD': 'A053730730a',
+#         'HOST': 'bedb.cr2ywaqoihsx.us-east-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bedb',
-        'USER': 'mysuperuser',
-        'PASSWORD': 'A053730730a',
-        'HOST': 'bedb.cr2ywaqoihsx.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -242,4 +248,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Stripe
-STRIPE_SECRET_KEY = "sk_test_51QEIBJCl05DVrigZAcxJXTyhEtMqLvGWnJdVyDturvyiqunpVaH3XZYycFkSHdM8kEZf7MELrZDKrzeNIYtlJNos00a04ufV6A"
+STRIPE_SECRET_KEY = "sk_test_51QFGLdI1cZgq3S9DWXbnVC00lwvX8fpynWbnVjtcYAUGOCmjeL1z4FDxEQr2ZlVZCTse1B1Qt5Es2m8uXSTiTgpu00es8p4p1o"
