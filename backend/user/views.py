@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from django.views import View
 from .utils import send_otp_via_sns, generate_otp
 from rest_framework.permissions import AllowAny
+from wallet.models import Wallet
+from django.db import transaction
 
 User = get_user_model()
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
@@ -22,16 +24,20 @@ from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 class RegisterAPI(generics.GenericAPIView):
     """
     API endpoint for user registration.
-    Handles user creation and provides a refresh and access token upon successful registration.
+    Handles user creation, initializes the user's wallet, and provides a refresh and access token upon successful registration.
     """
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         # Validate and save the user data
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+
+        with transaction.atomic():
+            user = serializer.save()
+            Wallet.objects.create(user=user, balance=0)
 
         # Generate tokens for the newly created user
         refresh = RefreshToken.for_user(user)
@@ -150,8 +156,8 @@ class VerifyOTPView(APIView):
             otp_record.delete()  # Delete OTP after successful verification
 
             # Set the is_active attribute of the user to true
-            user.is_verified = True
-            user.save()
+            # user.is_verified = True
+            # user.save()
 
             return Response({"message": "OTP verified successfully!"}, status=status.HTTP_200_OK)
         except OTP.DoesNotExist:

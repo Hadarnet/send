@@ -43,7 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'first_name', 'last_name', 'banner', 'pic', 'birthday', 
             'phone', 'facebook', 'twitter', 'instagram', 'linkedin', 'website', 
-            'bio', 'is_verified', 'is_active', 'is_staff', 'businesses'
+            'bio', 'is_active', 'is_staff', 'businesses'
         )
 
     def get_businesses(self, obj):

@@ -17,7 +17,17 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 # print(stripe.api_key)
 # Create your views here.
 
+class BalanceView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        try:
+            wallet = Wallet.objects.get(user=user)
+            balance = wallet.balance
+            return Response({"balance": balance}, status=200)
+        except Wallet.DoesNotExist:
+            return Response({"error": "Wallet not found"}, status=404)
 class SuccessView(TemplateView):
     template_name = "success.html"
 
@@ -45,6 +55,7 @@ class DepositView(APIView):
 
             # Stripe Checkout session
             checkout_session = stripe.checkout.Session.create(
+                customer_email=request.user.email,
                 line_items=[
                     {
                         'price': price.id,

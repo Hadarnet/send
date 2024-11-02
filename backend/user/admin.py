@@ -9,7 +9,7 @@ class UserAdmin(admin.ModelAdmin):
     """
 
     # Fields to display in the list view of the User model.
-    list_display = ['id', 'created_at', 'modified_at', 'first_name', 'last_name', 'email', 'phone', 'birthday', 'is_verified', 'is_active', 'is_staff']
+    list_display = ['id', 'created_at', 'modified_at', 'first_name', 'last_name', 'email', 'phone', 'birthday', 'is_active', 'is_staff']
 
     # Fields to enable search functionality.
     search_fields = ['email', 'first_name', 'last_name', 'phone']

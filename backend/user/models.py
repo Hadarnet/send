@@ -90,7 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(blank=True)
 
     # Boolean field to determine if the user's email address has been verified
-    is_verified = models.BooleanField(default=False)
+    # is_verified = models.BooleanField(default=False)
 
     # Boolean field to determine if the user's account is active
     is_active = models.BooleanField(default=True)
