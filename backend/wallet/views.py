@@ -2,7 +2,7 @@ from django.shortcuts import render
 from backend import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from django.db.models import F
 from .models import Wallet, Transaction
 from user.models import User
@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
+from .serializers import TransactionSerializer
 import json
 import stripe
 
@@ -32,6 +33,14 @@ class BalanceView(APIView):
             return Response({"balance": balance}, status=200)
         except Wallet.DoesNotExist:
             return Response({"error": "Wallet not found"}, status=404)
+
+class TransactionListView(generics.ListAPIView):
+    serializer_class = TransactionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_wallet = Wallet.objects.get(user=self.request.user)
+        return Transaction.objects.filter(wallet=user_wallet).order_by('-timestamp')
 class SuccessView(TemplateView):
     template_name = "success.html"
 
@@ -91,6 +100,11 @@ def handle_checkout_session(session):
             wallet = Wallet.objects.select_for_update().get(user=user)
             wallet.balance = F("balance") + amount
             wallet.save(update_fields=["balance"])
+            Transaction.objects.create(
+                wallet=wallet,
+                type=Transaction.DEPOSIT,
+                amount=amount
+            )
 
         print("Balance updated successfully for user:", user.email)
     except User.DoesNotExist:
@@ -135,3 +149,46 @@ def my_webhook_view(request):
     print('Unhandled event type {}'.format(event.type))
 
   return HttpResponse(status=200)
+
+
+class TransferView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        sender = request.user
+        recipient_email = request.data.get("recipient_email")
+        amount = request.data.get("amount")
+        
+        # Validate the amount and recipient
+        if amount is None or amount <= 0:
+            return Response({"error": "Invalid transfer amount."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            recipient_wallet = Wallet.objects.select_for_update().get(user__email=recipient_email)
+            sender_wallet = Wallet.objects.select_for_update().get(user=sender)
+            
+            # Ensure sender has enough balance
+            if sender_wallet.balance < amount:
+                return Response({"error": "Insufficient balance."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Transfer within an atomic transaction
+            with transaction.atomic():
+                sender_wallet.balance -= amount
+                recipient_wallet.balance += amount
+                sender_wallet.save(update_fields=["balance"])
+                recipient_wallet.save(update_fields=["balance"])
+                Transaction.objects.create(
+                wallet=sender_wallet,
+                type=Transaction.TRANSFER,
+                amount=-amount  # Negative amount for sender's record
+                )
+                Transaction.objects.create(
+                    wallet=recipient_wallet,
+                    type=Transaction.TRANSFER,
+                    amount=amount  # Positive amount for recipient's record
+                )
+
+            return Response({"message": "Transfer successful."}, status=status.HTTP_200_OK)
+
+        except Wallet.DoesNotExist:
+            return Response({"error": "Recipient not found."}, status=status.HTTP_404_NOT_FOUND)

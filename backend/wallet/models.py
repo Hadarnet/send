@@ -7,6 +7,8 @@ class Wallet(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
+    def __str__(self):
+        return f"{self.user.first_name}'s Wallet --- ({self.user})"
 class Transaction(models.Model):
     DEPOSIT = 'D'
     WITHDRAWAL = 'W'
@@ -21,4 +23,6 @@ class Transaction(models.Model):
     type = models.CharField(max_length=1, choices=TRANSACTION_TYPES)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
-    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.wallet} ---> {self.type} ---> {self.amount}"
