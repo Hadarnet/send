@@ -10,4 +10,5 @@ urlpatterns = [
     path('webhook/', views.my_webhook_view, name='stripe-webhook'),
     path('transfer/', views.TransferView.as_view(), name='wallet_transfer'),
     path('transactions/', views.TransactionListView.as_view(), name='transaction_list'),
+    path('withdraw/', views.WithdrawView.as_view(), name='withdraw'),
 ]

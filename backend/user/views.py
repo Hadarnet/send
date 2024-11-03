@@ -38,7 +38,9 @@ class RegisterAPI(generics.GenericAPIView):
         with transaction.atomic():
             user = serializer.save()
             Wallet.objects.create(user=user, balance=0)
-
+            account = user.create_connected_account()
+            user.stripe_account_id = account.id
+            user.save(update_fields=["stripe_account_id"])
         # Generate tokens for the newly created user
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)

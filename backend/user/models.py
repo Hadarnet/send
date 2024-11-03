@@ -6,7 +6,7 @@ import string
 from django.contrib.auth.models import Group
 from business.models import Business
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-
+import stripe
 class UserManager(BaseUserManager):
     """
     Custom manager for User model with methods to create regular users and superusers.
@@ -114,6 +114,25 @@ class User(AbstractBaseUser, PermissionsMixin):
         Return all businesses associated with the user through BusinessPermission.
         """
         return Business.objects.filter(businesspermission__user=self)
+    
+    def create_connected_account(self):
+        account = stripe.Account.create(
+            type="express",
+            country="US",
+            email=self.email,
+            capabilities={"transfers": {"requested": True}},
+        )
+        self.stripe_account_id = account.id
+        self.save()
+        return account
+
+    def generate_account_link(self):
+        return stripe.AccountLink.create(
+            account=self.stripe_account_id,
+            refresh_url="https://yourdomain.com/reauth",
+            return_url="https://yourdomain.com/complete",
+            type="account_onboarding",
+        ).url
 
     class Meta:
         verbose_name = "User"  # Singular name for the model
