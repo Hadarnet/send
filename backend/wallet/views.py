@@ -5,11 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import F
 from .models import Wallet, Transaction
+from user.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+from django.db import transaction
+import json
 import stripe
 
 
@@ -74,29 +78,60 @@ class DepositView(APIView):
            
             print(f"Error creating Stripe session: {str(e)}")
             return Response({"error": str(e)}, status=400)
-        
-class StripeWebhookView(View):
-    def post(self, request):
-        payload = request.body
-        sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-        event = None
 
-        try:
-            event = stripe.Webhook.construct_event(
-                payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
-            )
-        except ValueError:
-            return JsonResponse({"error": "Invalid payload"}, status=400)
-        except stripe.error.SignatureVerificationError:
-            return JsonResponse({"error": "Invalid signature"}, status=400)
+def handle_checkout_session(session):
+    try:
+        # Retrieve the amount and user identifier
+        amount = session['amount_total'] / 100 
+        user_email = session['customer_email']  
 
-        # Process successful checkout session completion
-        if event['type'] == 'checkout.session.completed':
-            session = event['data']['object']
-            user_id = session['metadata']['user_id']
-            amount = int(session['metadata']['amount'])
+        user = User.objects.get(email=user_email)
 
-            # Update wallet balance for the user
-            Wallet.objects.filter(user_id=user_id).update(balance=F('balance') + amount)
+        with transaction.atomic():
+            wallet = Wallet.objects.select_for_update().get(user=user)
+            wallet.balance = F("balance") + amount
+            wallet.save(update_fields=["balance"])
 
-        return JsonResponse({"status": "success"}, status=200)
+        print("Balance updated successfully for user:", user.email)
+    except User.DoesNotExist:
+        print("User with email {} does not exist.".format(user_email))
+    except Wallet.DoesNotExist:
+        print("Wallet does not exist for user:", user.email)
+
+@csrf_exempt
+def my_webhook_view(request):
+  payload = request.body
+  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+  event = None
+
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+    )
+  except ValueError as e:
+    # Invalid payload
+    print('Error parsing payload: {}'.format(str(e)))
+    return HttpResponse(status=400)
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    print('Error verifying webhook signature: {}'.format(str(e)))
+    return HttpResponse(status=400)
+
+  try:
+    event = stripe.Event.construct_from(
+      json.loads(payload), stripe.api_key
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+
+  # Handle the event
+  if event.type == 'checkout.session.completed':
+    session = event.data.object
+    # Then define and call a method to handle the successful payment intent.
+    handle_checkout_session(session)
+
+  else:
+    print('Unhandled event type {}'.format(event.type))
+
+  return HttpResponse(status=200)
