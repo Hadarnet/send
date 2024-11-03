@@ -59,7 +59,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChatMessage
-        fields = ['id', 'reciever_profile', 'sender_profile', 'message', 'is_read', 'date']
+        fields = ['id', 'reciever_profile', 'sender_profile', 'message', 'image', 'audio', 'video', 'is_read', 'date']
         read_only_fields = ['sender', 'is_read']  # Make 'sender' read-only
 
     def __init__(self, *args, **kwargs):

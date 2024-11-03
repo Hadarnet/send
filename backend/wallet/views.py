@@ -192,3 +192,44 @@ class TransferView(APIView):
 
         except Wallet.DoesNotExist:
             return Response({"error": "Recipient not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+class WithdrawView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        amount = request.data.get("amount")
+        user_wallet = request.user.wallet
+        stripe_account_id = request.user.stripe_account_id
+
+        if not stripe_account_id:
+            return Response({"error": "No connected Stripe account found."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if user_wallet.balance < amount:
+            return Response({"error": "Insufficient funds."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # # Begin transaction
+            # with transaction.atomic():
+            #     # Deduct from user’s wallet
+            #     user_wallet.balance -= amount
+            #     user_wallet.save()
+
+                # Create a Stripe transfer to the connected account
+            payout = stripe.Transfer.create(
+                amount=int(amount * 100),  # Amount in cents
+                currency="usd",
+                destination=stripe_account_id,
+                # transfer_group="WALLET_WITHDRAWAL"
+            )
+
+                # # Log the transaction
+                # Transaction.objects.create(
+                #     wallet=user_wallet,
+                #     type=Transaction.WITHDRAWAL,
+                #     amount=amount
+                # )
+
+            return Response({"message": "Withdrawal successful"}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

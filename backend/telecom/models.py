@@ -110,6 +110,9 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="sender")
     reciever = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="reciever")
     message = models.CharField(max_length=100000)
+    image = models.ImageField(upload_to='chat_images/', null=True, blank=True)
+    audio = models.FileField(upload_to='chat_audio/', null=True, blank=True)
+    video = models.FileField(upload_to='chat_video/', null=True, blank=True)
     is_read = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
 

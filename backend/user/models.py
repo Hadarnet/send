@@ -68,6 +68,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     # User's email address, must be unique and indexed
     email = models.EmailField(db_index=True, unique=True)
 
+    stripe_account_id = models.CharField(max_length=50, null=True, blank=True)
+
     # Optional field for phone number
     phone = models.CharField(max_length=15, blank=True)
 
