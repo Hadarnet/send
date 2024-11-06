@@ -41,6 +41,7 @@ class RegisterAPI(generics.GenericAPIView):
             account = user.create_connected_account()
             user.stripe_account_id = account.id
             user.save(update_fields=["stripe_account_id"])
+            account_link_url = user.generate_account_link()
         # Generate tokens for the newly created user
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
@@ -51,7 +52,8 @@ class RegisterAPI(generics.GenericAPIView):
             "token": {
                 'refresh': str(refresh),
                 'access': access,
-            }
+            },
+            "stripe_account_link": account_link_url,
         })
 
 # Login API

@@ -57,7 +57,7 @@ class DepositView(APIView):
         
         try:
             # Stripe API call to create a product and price
-            product = stripe.Product.create(name='Wallet Deposit')
+            product = stripe.Product.create(name='Wallet Deposit', images=["https://static.vecteezy.com/system/resources/previews/007/853/706/large_2x/wallet-illustration-on-a-background-premium-quality-symbols-icons-for-concept-and-graphic-design-vector.jpg"])
             amount_in_cents = int(request.data["amount"] * 100) 
 
             price = stripe.Price.create(
