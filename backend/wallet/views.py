@@ -241,6 +241,14 @@ class WithdrawView(APIView):
             )
 
             return Response({"message": "Payout initiated successfully"}, status=status.HTTP_200_OK)
+        
+        except stripe.error.InvalidRequestError as e:
+            # Check for the specific error related to missing transfer capabilities
+            if "capabilities enabled" in str(e):
+                account_link_url = user.generate_account_link()
+                return Response({"account_link_url": account_link_url}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
