@@ -173,12 +173,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bedatabase',
-        'USER': 'bedatabase',
+        'NAME': 'bedb',
+        'USER': 'bedb',
         'PASSWORD': 'A053730730a',
-        'HOST': 'bedatabase.cr2ywaqoihsx.us-east-1.rds.amazonaws.com',
+        'HOST': 'bedb.cr2ywaqoihsx.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
-    }
+        }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
