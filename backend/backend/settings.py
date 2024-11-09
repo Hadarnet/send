@@ -34,7 +34,7 @@ EMAIL_HOST_USER = 'connect@becompany.net'
 EMAIL_HOST_PASSWORD = 'FfyZM=9rV.d]'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
